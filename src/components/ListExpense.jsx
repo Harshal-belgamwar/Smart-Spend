@@ -21,7 +21,13 @@ const ListExpense = () => {
 
   const dispatch = useDispatch();
 
-  
+  useEffect(() => {
+  if (isOpen || selectedTransaction) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+}, [isOpen, selectedTransaction]);
 
   const data = useSelector((state) => state.Transaction.expense);
 
