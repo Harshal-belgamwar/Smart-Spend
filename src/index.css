@@ -1,2 +1,6 @@
 @import "tailwindcss";
 
+/* Add to index.css or App.css */
+.scrollbar-gutter-stable {
+  scrollbar-gutter: stable;
+}
