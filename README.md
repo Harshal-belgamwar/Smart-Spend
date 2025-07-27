@@ -28,25 +28,55 @@ A feature-rich and modern expense tracker to manage your income and spending wit
 ---
 ## 🖼️ Screenshots
 
-Display Box: ("C:\Users\harsh\Pictures\Screenshots\Screenshot 2025-07-27 162744.png")
+### 📊 Display Board  
+![Display Board](./src/assets/screenshots/Display.png)
+
+### ➕ Add Expense  
+![Add](./src/assets/screenshots/Add.png)
+
+### 🧮 Dashboard  
+![DashBoard](./src/assets/screenshots/DashBoard.png)
+
+### 📥 PDF Download  
+![PDF Download](./src/assets/screenshots/Report.png)
+
+### suggestion
+![Suggestion](./src/assets/screenshots/Suggestion.png)
+
+---
+
+
 
 ----
 
-## 🚀 Installation
-
-Clone the repository and install dependencies:
-
+# 1️⃣ Clone the repository
 git clone https://github.com/Harshal-belgamwar/Smart-Spend<br>
-cd Smart-Spend<br>
+cd Smart-Spend
 
-npm install<br>
+# 2️⃣ Install core dependencies
+npm install
 
-npm install @reduxjs/toolkit react-redux redux-persist<br>
+# 3️⃣ Install Redux Toolkit, React Redux, and Redux Persist
+npm install @reduxjs/toolkit react-redux redux-persist
 
-npm install @emailjs/browser<br>
-npm install chart.js react-chartjs-2<br>
-npm install jspdf<br>
-npm run dev<br><br>
+# 4️⃣ Install EmailJS for sending emails
+npm install @emailjs/browser
 
+# 5️⃣ Install Chart.js for graphs
+npm install chart.js react-chartjs-2
+
+# 6️⃣ Install jsPDF for PDF downloads
+npm install jspdf
+
+# 7️⃣ start the server
+npm run dev
+<br>
+
+👤 Author<br>
+👨‍💻 Harshal Belgamwar<br>
+🎓 Computer Engineering Student,PICT<br>
+📍 Pune, India<br>
+📧 harshalbelgamwar@gmail.com<br>
+🔗 www.linkedin.com/in/harshal-belgamwar<br>
 
 
