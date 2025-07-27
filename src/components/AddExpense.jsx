@@ -13,7 +13,10 @@ const AddExpense = () => {
     date: "",
   });
 
- 
+  const [errors, setErrors] = useState({
+    title: "",
+    amount: "",
+  });
 
   const handler = (e) => {
     const { name, value } = e.target;
@@ -27,6 +30,24 @@ const AddExpense = () => {
   const handleSubmit = (e) => {
     //sent to redux toolkit
     e.preventDefault();
+
+    let hasError = false;
+    const newErrors = { title: "", amount: "" };
+
+    if (form.title.trim() === "") {
+      newErrors.title = "Title is required.";
+      hasError = true;
+    }
+
+    if (form.amount === "") {
+      newErrors.amount = "Amount is required.";
+      hasError = true;
+    }
+
+    if (hasError) {
+      setErrors(newErrors);
+      return;
+    }
 
     const transactionData = {
       id: Date.now(),
@@ -44,6 +65,7 @@ const AddExpense = () => {
       type: "",
       date: "",
     });
+    setErrors({ title: "", amount: "" }); 
   };
 
   return (
@@ -100,6 +122,7 @@ const AddExpense = () => {
                   className="w-full px-4 py-3 rounded-xl bg-white/15 backdrop-blur-sm text-white placeholder-white/50 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all duration-300"
                   onChange={handler}
                 />
+                {errors.title && <p style={{ color: "white", fontSize: "0.8rem" }}>{errors.title}</p>}
               </div>
             </div>
 
@@ -122,6 +145,7 @@ const AddExpense = () => {
                   onChange={handler}
                   className="w-full px-4 py-3 rounded-xl bg-white/15 backdrop-blur-sm text-white placeholder-white/50 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all duration-300"
                 />
+                {errors.amount && <p style={{ color: "white", fontSize: "0.8rem" }}>{errors.amount}</p>}
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                   <span className="text-white/70 text-sm">INR</span>
                 </div>
@@ -179,6 +203,7 @@ const AddExpense = () => {
                 <option value="investment" className="text-gray-900 bg-white">
                   📈 Investment
                 </option>
+                
                 <option value="other" className="text-gray-900 bg-white">
                   📋 Other
                 </option>
@@ -209,6 +234,9 @@ const AddExpense = () => {
                 </option>
                 <option value="income" className="text-gray-900 bg-white">
                   ⬆️ Income
+                </option>
+                <option value="Transfer" className="text-gray-900 bg-white">
+                  📤 Transfer
                 </option>
                 <option value="expense" className="text-gray-900 bg-white">
                   ⬇️ Expense

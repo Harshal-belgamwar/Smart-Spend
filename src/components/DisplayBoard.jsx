@@ -103,7 +103,7 @@ const netBalance = totalIncome - totalExpense;
           </p>
         </div>
         <div className="text-center p-4 bg-white rounded-lg shadow-sm border border-slate-200">
-          <p className="text-slate-600 text-sm">Savings Rate</p>
+          <p className="text-slate-600 text-sm">Savings Ratio</p>
           <p className="text-xl font-semibold text-slate-800">
             {totalIncome > 0 ? `${(((totalIncome - totalExpense) / totalIncome) * 100).toFixed(1)}%` : '0%'}
           </p>

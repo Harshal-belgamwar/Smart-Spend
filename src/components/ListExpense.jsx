@@ -1,19 +1,27 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { DeleteTransaction } from "../store/Slices/Transaction";
+import {
+  DeleteTransaction,
+  editTransaction,
+} from "../store/Slices/Transaction";
 import { DeleteAllTransaction } from "../store/Slices/Transaction";
 
 // Import jsPDF and autoTable
 
 import "jspdf-autotable";
 import Pdf from "./Pdf";
+import Edit from "./Edit";
 
 const ListExpense = () => {
   const [selectedTransaction, setselectedTransaction] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [transactionToEdit, setTransactionToEdit] = useState(null);
 
   const dispatch = useDispatch();
+
+  
 
   const data = useSelector((state) => state.Transaction.expense);
 
@@ -25,10 +33,24 @@ const ListExpense = () => {
     setselectedTransaction(obj);
   };
 
-  const handleDeleteAll=()=>{
+  const handleDeleteAll = () => {
     dispatch(DeleteAllTransaction());
-  }
+  };
 
+  const handleEdit = (obj) => {
+    setTransactionToEdit(obj); // store selected transaction
+    setIsOpen(true); // open modal
+  };
+
+  const handleSave = (updatedTransaction) => {
+    dispatch(
+      editTransaction({
+        id: updatedTransaction.id,
+        updatedData: updatedTransaction,
+      })
+    ); // your redux action
+    setIsOpen(false);
+  };
   // Filter data based on selected month and category
   const filteredData = data.filter((transaction) => {
     const month = transaction.date.split("-")[1]; // gets "07"
@@ -157,7 +179,7 @@ const ListExpense = () => {
 
           {/* Category Filter */}
           <div className="relative">
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+            <label className=" text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
               <svg
                 className="w-4 h-4 text-purple-600"
                 fill="currentColor"
@@ -318,28 +340,59 @@ const ListExpense = () => {
                   </div>
 
                   <div className="flex flex-row sm:flex-col gap-2 sm:ml-4 justify-end sm:justify-start">
-                    <button
-                      onClick={() => handleDetail(obj)}
-                      className="group relative p-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110 flex-shrink-0"
-                      title="View Details"
-                    >
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/128/3589/3589034.png"
-                        alt="details"
-                        className="w-3 h-3 sm:w-4 sm:h-4 filter brightness-0 invert"
-                      />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(obj)}
-                      className="group relative p-2 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110 flex-shrink-0"
-                      title="Delete Transaction"
-                    >
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/128/6861/6861362.png"
-                        alt="delete"
-                        className="w-3 h-3 sm:w-4 sm:h-4 filter brightness-0 invert"
-                      />
-                    </button>
+                    {/* View Button */}
+                    <div className="w-10 h-10">
+                      <button
+                        onClick={() => handleDetail(obj)}
+                        className="w-full h-full flex items-center justify-center p-2 bg-gradient-to-r from-blue-500 to-indigo-600 
+        hover:from-blue-600 hover:to-indigo-700 
+        rounded-lg shadow-md hover:shadow-md 
+        transition-transform duration-200 transform hover:scale-105"
+                        title="View Details"
+                      >
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/128/3589/3589034.png"
+                          alt="details"
+                          className="w-4 h-4 filter brightness-0 invert"
+                        />
+                      </button>
+                    </div>
+
+                    {/* Edit Button */}
+                    <div className="w-10 h-10">
+                      <button
+                        onClick={() => handleEdit(obj)}
+                        className="w-full h-full flex items-center justify-center p-2 bg-gradient-to-r from-green-500 to-emerald-600 
+        hover:from-green-600 hover:to-emerald-700 
+        rounded-lg shadow-md hover:shadow-md 
+        transition-transform duration-200 transform hover:scale-105"
+                        title="Edit Transaction"
+                      >
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/128/1159/1159633.png"
+                          alt="edit"
+                          className="w-4 h-4 filter brightness-0 invert"
+                        />
+                      </button>
+                    </div>
+
+                    {/* Delete Button */}
+                    <div className="w-10 h-10">
+                      <button
+                        onClick={() => handleDelete(obj)}
+                        className="w-full h-full flex items-center justify-center p-2 bg-gradient-to-r from-red-500 to-pink-600 
+        hover:from-red-600 hover:to-pink-700 
+        rounded-lg shadow-md hover:shadow-md 
+        transition-transform duration-200 transform hover:scale-105"
+                        title="Delete Transaction"
+                      >
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/128/6861/6861362.png"
+                          alt="delete"
+                          className="w-4 h-4 filter brightness-0 invert"
+                        />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </li>
@@ -370,6 +423,15 @@ const ListExpense = () => {
             </li>
           )}
         </ul>
+
+        {isOpen && (
+          <Edit
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            transactionToEdit={transactionToEdit}
+            onSave={handleSave}
+          />
+        )}
 
         {selectedTransaction && (
           <div className="fixed inset-0  bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
@@ -464,7 +526,10 @@ const ListExpense = () => {
           </div>
         )}
       </div>
-      <div className="flex items-center justify-center mt-4" onClick={handleDeleteAll}>
+      <div
+        className="flex items-center justify-center mt-4"
+        onClick={handleDeleteAll}
+      >
         <button
           className="bg-gradient-to-r from-blue-500 via-purple-500 to-violet-500
               text-white font-bold py-2 px-6 rounded-full
