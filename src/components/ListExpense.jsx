@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useStatet } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   DeleteTransaction,
@@ -12,13 +12,7 @@ import "jspdf-autotable";
 import Pdf from "./Pdf";
 import Edit from "./Edit";
 
-useEffect(() => {
-  if (isOpen || selectedTransaction) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
-}, [isOpen, selectedTransaction]);
+
 
 
 const ListExpense = () => {
