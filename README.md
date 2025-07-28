@@ -72,6 +72,9 @@ npm install jspdf
 npm run dev
 <br>
 
+Live : https://smart-spend-rho.vercel.app/
+<br>
+
 👤 Author<br>
 👨‍💻 Harshal Belgamwar<br>
 🎓 Computer Engineering Student,PICT<br>
