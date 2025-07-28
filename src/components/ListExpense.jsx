@@ -261,7 +261,7 @@ const ListExpense = () => {
       </div>
 
       <div className="min-h-[300px] bg-white rounded-xl shadow-inner border-2 border-gray-100 p-4 sm:p-6">
-        <ul className="space-y-3 sm:space-y-4 max-h-[50vh] sm:max-h-[400px] overflow-y-auto pr-1 sm:pr-2">
+        <ul className="space-y-3 sm:space-y-4 max-h-[50vh] sm:max-h-[400px] overflow-y-scroll pr-1 sm:pr-2">
           {filteredData.length > 0 ? (
             filteredData.map((obj) => (
               <li
